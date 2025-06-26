@@ -86,3 +86,18 @@
     cursor: pointer;
   }
   
+  .card-01 {
+    transition: transform 0.2s ease-out; /* Smooth transition on reset */
+    will-change: transform;
+  }
+
+  .container {
+    position: relative;
+    height: 100vh;
+    padding: 2rem;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+

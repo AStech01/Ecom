@@ -1,19 +1,29 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 
-const CardProduct = ({ product, recommendations }) => {
-    const {
-        id, title, brand, price, description,
-        images, rating, reviews, offers, sizes,
-        highlights, specs, deliveryPincode,  customerReviews
-      } = product;
-//   const { id, title, brand, price, description, images, rating, reviews } = product;
-const [mainImage, setMainImage] = useState(images?.[0] || '');
+const CardProduct = ({ product = {}, recommendations = [] }) => {
+  const {
+    title,
+    brand,
+    price,
+    description,
+    images = [],
+    rating,
+    reviews,
+    offers = [],
+    sizes = [],
+    highlights = [],
+    specs = {},
+    customerReviews = []
+  } = product;
+
+  const [mainImage, setMainImage] = useState(images?.[0] || '');
   const [zoom, setZoom] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 0, y: 0 });
   const zoomRef = useRef(null);
-  const navigate = useNavigate();
+  const [selectedSize, setSelectedSize] = useState(sizes?.[0] || '');
+  const [pincode, setPincode] = useState('');
+  const [deliverable, setDeliverable] = useState(null);
 
   const handleMouseMove = (e) => {
     const rect = zoomRef.current.getBoundingClientRect();
@@ -22,29 +32,16 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
     setZoomPos({ x, y });
   };
 
-  const handleMouseLeave = () => setZoom(false);
-  const handleMouseEnter = () => setZoom(true);
-//   const {
-//     id, title, brand, price, description,
-//     images, rating, reviews, offers, sizes,
-//     highlights, specs, deliveryPincode
-//   } = product;
-
-  const [selectedSize, setSelectedSize] = useState(sizes?.[0] || '');
-  const [pincode, setPincode] = useState('');
-  const [deliverable, setDeliverable] = useState(null);
-
   const checkPincode = () => {
-    // Mock delivery check
-    setDeliverable(pincode.length === 6 ? true : false);
+    setDeliverable(pincode.length === 6);
   };
+
   return (
     <section className="text-gray-600 body-font overflow-hidden">
-      <div className=" px-5 py-24 mx-auto">
-        {/* 3 columns flex container */}
+      <div className="px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap lg:flex-nowrap items-start">
-          
-          {/* Left side: thumbnails vertical on lg, hidden on smaller */}
+
+          {/* Left Side Thumbnails */}
           <div className="hidden lg:flex lg:flex-col lg:w-1/12 space-y-4 mr-4">
             {images.slice(0, 5).map((img, index) => (
               <motion.img
@@ -59,16 +56,14 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
             ))}
           </div>
 
-          {/* Middle: Main Image and thumbnails below on small/tablet */}
+          {/* Main Image */}
           <div className="lg:w-5/12 w-full mr-6 flex flex-col">
-            {/* Main Image with zoom */}
             <div
               ref={zoomRef}
               className="w-full h-96 rounded-lg overflow-hidden cursor-zoom-in relative"
               onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              onMouseEnter={handleMouseEnter}
-              style={{ position: 'relative' }}
+              onMouseLeave={() => setZoom(false)}
+              onMouseEnter={() => setZoom(true)}
             >
               <img
                 src={mainImage}
@@ -90,7 +85,7 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
               )}
             </div>
 
-            {/* Thumbnails below main image on small and tablet */}
+            {/* Thumbnails below on mobile */}
             <div className="flex lg:hidden space-x-4 mt-4 overflow-x-auto px-1">
               {images.slice(0, 5).map((img, index) => (
                 <motion.img
@@ -106,46 +101,14 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
             </div>
           </div>
 
-          {/* Right side: Product Details (You can add your details here) */}
-          {/* <motion.div
-  className="lg:w-6/12 w-full mt-6 lg:mt-0"
-  initial={{ opacity: 0, y: 50 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6, ease: 'easeOut' }}
->
-  <h1 className="text-gray-900 text-3xl title-font font-semibold mb-2">
-    {title}
-  </h1>
-  <h2 className="text-sm text-gray-500 mb-1 uppercase tracking-wide">{brand}</h2>
-
-  <div className="mb-4">
-    <span className="inline-block bg-green-100 text-green-800 text-sm px-2 py-1 rounded-full">
-      ⭐ {rating} • {reviews} reviews
-    </span>
-  </div>
-
-  <p className="leading-relaxed text-gray-700 mb-6">{description}</p>
-
-  <div className="flex items-center space-x-4">
-    <span className="title-font font-bold text-3xl text-indigo-600">
-      ${price}
-    </span>
-    <button
-      onClick={() => alert('Buy Now Clicked!')}
-      className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition-all duration-300"
-    >
-      Buy Now
-    </button>
-  </div>
-</motion.div> */}
-                  
-                  <motion.div
+          {/* Right Side Product Details */}
+          <motion.div
             className="lg:w-6/12 w-full mt-6 lg:mt-0 space-y-6"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
-            {/* Title, Brand, Rating */}
+            {/* Title */}
             <div>
               <h1 className="text-gray-900 text-3xl font-semibold">{title}</h1>
               <h2 className="text-sm text-gray-500 uppercase tracking-wide">{brand}</h2>
@@ -156,7 +119,7 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
             </div>
 
             {/* Offers */}
-            {offers?.length > 0 && (
+            {offers.length > 0 && (
               <div className="bg-green-100 p-4 rounded space-y-1">
                 <h3 className="font-semibold">Offers</h3>
                 <ul className="list-disc list-inside text-sm">
@@ -173,8 +136,8 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
               </button>
             </div>
 
-            {/* Size Selection */}
-            {sizes?.length > 0 && (
+            {/* Size Selector */}
+            {sizes.length > 0 && (
               <div>
                 <h3 className="font-semibold mb-2">Select Size</h3>
                 <div className="flex space-x-2">
@@ -195,7 +158,7 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
             <p className="leading-relaxed text-gray-700">{description}</p>
 
             {/* Highlights */}
-            {highlights?.length > 0 && (
+            {highlights.length > 0 && (
               <div>
                 <h3 className="font-semibold mb-2">Highlights</h3>
                 <ul className="list-disc list-inside text-sm text-gray-700">
@@ -204,8 +167,8 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
               </div>
             )}
 
-            {/* Specifications */}
-            {specs && (
+            {/* Specs */}
+            {Object.keys(specs).length > 0 && (
               <div>
                 <h3 className="font-semibold mb-2">Specifications</h3>
                 <table className="w-full text-sm">
@@ -239,7 +202,7 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
                   Check
                 </button>
               </div>
-              {deliverable != null && (
+              {deliverable !== null && (
                 <p className={`text-sm font-medium ${deliverable ? 'text-green-600' : 'text-red-600'}`}>
                   {deliverable
                     ? `✅ Delivery available to ${pincode}`
@@ -248,15 +211,15 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
               )}
             </div>
 
-            {/* Recommended Items */}
-            {recommendations?.length > 0 && (
+            {/* Recommendations */}
+            {recommendations.length > 0 && (
               <div>
                 <h3 className="font-semibold mb-2">You may also like</h3>
-                <div className="flex space-x-4 overflow-x-auto">
+                <div className="flex space-x-4 overflow-x-auto py-2">
                   {recommendations.map(item => (
                     <div key={item.id} className="w-32 flex-shrink-0">
                       <img
-                        src={item.images[0]}
+                        src={item.images?.[0] || '../assets/img-03.avif'}
                         alt={item.title}
                         className="w-full h-32 object-cover rounded"
                       />
@@ -271,7 +234,7 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
             {/* Customer Reviews */}
             <div>
               <h3 className="font-semibold mb-4">Customer Reviews</h3>
-              {customerReviews?.length > 0 ? (
+              {customerReviews.length > 0 ? (
                 customerReviews.map((rev, i) => (
                   <motion.div
                     key={i}
@@ -292,8 +255,6 @@ const [mainImage, setMainImage] = useState(images?.[0] || '');
               )}
             </div>
           </motion.div>
-                  
-               
         </div>
       </div>
     </section>

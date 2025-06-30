@@ -7,14 +7,32 @@ import img08 from '../assets/img-08.avif';
 
 const sampleProduct = {
   id: 1,
-  title: 'The Catcher in the Rye',
-  brand: 'Penguin Classics',
-  price: 58.0,
-  description:
-    'A classic novel originally published in 1951. It’s widely considered one of the greatest American novels...',
+  title: 'Smart Watch Series 7',
+  brand: 'TechWear',
+  price: 249.99,
+  description: 'A stylish smartwatch with fitness tracking and notifications.',
   images: [img01, img02, img03, img04, img05, img08],
   rating: 4,
   reviews: 127,
+  rating: 4.5,
+  reviews: 120,
+  offers: ['10% off with code TECH10', 'Free shipping for orders over $50'],
+  sizes: ['M', 'L', 'XL'],
+  highlights: ['Heart Rate Monitor', 'Water Resistant', 'Bluetooth 5.0'],
+  specs: {
+    'Battery Life': 'Up to 18 hours',
+    'Connectivity': 'Bluetooth, Wi-Fi',
+    'Compatibility': 'iOS & Android'
+  },
+  customerReviews: [
+    { name: 'John D.', rating: 5, comment: 'Love the features and battery!' },
+    { name: 'Jane R.', rating: 4, comment: 'Great value for money.' }
+  ]
+
 };
+
+
+
+
 export default sampleProduct;
 

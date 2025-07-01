@@ -32,7 +32,5 @@ const sampleProduct = {
 };
 
 
-
-
 export default sampleProduct;
 

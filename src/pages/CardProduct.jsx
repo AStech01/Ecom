@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const CardProduct = ({ product = {}, recommendations = [] }) => {
+  
   const {
     title,
     brand,
@@ -16,6 +17,14 @@ const CardProduct = ({ product = {}, recommendations = [] }) => {
     specs = {},
     customerReviews = []
   } = product;
+
+ 
+   
+
+  console.log(product, "ff");
+  console.log(recommendations,"f");
+  
+  
 
   const [mainImage, setMainImage] = useState(images?.[0] || '');
   const [zoom, setZoom] = useState(false);

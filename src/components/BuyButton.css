@@ -1,0 +1,77 @@
+.buy {
+    color: #4c4c4c;
+    border: 2px solid #4c4c4c;
+    width: 190px;
+    height: 45px;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+    border-radius: 5px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.04);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s linear;
+  }
+  
+  .buy small {
+    font-size: 14px;
+    margin-left: 5px;
+    opacity: 0.9;
+  }
+  
+  .loader {
+    font-size: 11.5px;
+    position: absolute;
+    color: #4c4c4c;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  
+  .processing {
+    top: -20px !important;
+  }
+  
+  .download {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #21d49a;
+    color: #f5f5f5;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.1s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .download.active {
+    width: 100%;
+    border-radius: 0;
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .download .track {
+    margin-left: 20px;
+    font-size: 16px;
+  }
+  
+  .fa-check {
+    font-size: 17px;
+  }
+  
+  .fa-shipping-fast {
+    margin-left: 18px;
+    font-size: 14px;
+  }
+  

@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import AnimatedCartButton from '../components/AnimatedCartButton';
+import BuyButton from '../components/BuyButton';
 
 const CardProduct = ({ product = {}, recommendations = [] }) => {
   
@@ -107,6 +109,10 @@ const CardProduct = ({ product = {}, recommendations = [] }) => {
                   whileHover={{ scale: 1.1 }}
                 />
               ))}
+            </div>
+            <div className="mt-6 flex justify-center gap-4">
+              <AnimatedCartButton />
+              {/* <BuyButton /> */}
             </div>
           </div>
 

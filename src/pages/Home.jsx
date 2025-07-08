@@ -8,6 +8,9 @@ import img3 from "../assets/img-03.avif";
 import "./home.css";
 import { useNavigate } from "react-router-dom";
 import Filter from "./filter/filter";
+// import Navbar from "../components/Navbar";
+import NavbarWithDock from "../components/Navbar";
+import Banner from "../components/Banner";
 import Navbar from "../components/Navbar";
 
 const Home = () => {
@@ -115,6 +118,9 @@ const [cartClicked, setCartClicked] = useState(false);
     <div className="" ref={ref}>
       <div>
         <Navbar/>
+      </div>
+      <div className="mt-4">
+        <Banner/>
       </div>
       <div>
         <Filter/>

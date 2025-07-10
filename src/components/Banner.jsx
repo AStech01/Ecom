@@ -147,7 +147,8 @@ const Banner = () => {
             onMouseLeave={handleLeave}
             className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 
                       backdrop-blur-lg bg-white/80 border border-gray-200 shadow-[0_8px_30px_rgb(0,0,0,0.12)] 
-                      rounded-3xl px-6 py-6 w-[90%] max-w-4xl z-50 transition-all duration-500"
+                      rounded-3xl px-6 py-6 w-[90%] max-w-xl
+                       z-50 transition-all duration-500"
           >
             <h2 className="text-2xl font-bold text-blue-800 mb-6 text-center tracking-wide">
               {activeCategory.name}
